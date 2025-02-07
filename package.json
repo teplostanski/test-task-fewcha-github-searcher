@@ -12,6 +12,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@fontsource-variable/inter-tight": "^5.1.1",
     "@heroui/react": "^2.6.14",
     "@reduxjs/toolkit": "^2.5.1",
     "@types/debounce": "^1.2.4",
