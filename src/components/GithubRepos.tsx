@@ -4,13 +4,26 @@ import debounce from 'debounce';
 
 export const GithubRepos = () => {
   const [username, setUsername] = useState('');
-  const { data: repos, isLoading, error } = useGetUserReposQuery(username, {
-    skip: !username || username.length < 2,
+  
+  const { 
+    data: repos,
+    error,
+    isFetching
+  } = useGetUserReposQuery(username, {
+    skip: !username || username.length < 2
   });
 
   const handleChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
-  }, 500);
+  }, 1000);
+
+  const getErrorMessage = (error: any) => {
+    console.log('Error object:', error);
+    return error.message || 'Произошла ошибка при загрузке данных';
+  };
+
+  const showReposList = !isFetching && !error && repos && repos.length > 0;
+  const showEmptyMessage = !isFetching && !error && repos && repos.length === 0;
 
   return (
     <div>
@@ -20,10 +33,15 @@ export const GithubRepos = () => {
         placeholder="Введите имя пользователя GitHub"
       />
 
-      {isLoading && <div>Загрузка...</div>}
-      {error && 'data' in error && <div>{(error.data as { message: string }).message}</div>}
+      {isFetching && <div>Загрузка...</div>}
       
-      {repos && repos.length > 0 && (
+      {error && (
+        <div className="text-red-500 mt-2.5">
+          {getErrorMessage(error)}
+        </div>
+      )}
+      
+      {showReposList && (
         <ul>
           {repos.map((repo) => (
             <li key={repo.id}>
@@ -37,7 +55,7 @@ export const GithubRepos = () => {
         </ul>
       )}
       
-      {repos && repos.length === 0 && (
+      {showEmptyMessage && (
         <div>У пользователя нет публичных репозиториев</div>
       )}
     </div>

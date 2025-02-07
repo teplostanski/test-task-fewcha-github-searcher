@@ -18,19 +18,21 @@ export const githubApi = createApi({
     baseUrl: 'https://api.github.com',
     headers: {
       'Accept': 'application/vnd.github.v3+json',
+      'Authorization': 'Bearer '
     }
   }),
   endpoints: (builder) => ({
     getUserRepos: builder.query<Repository[], string>({
-      query: (username) => ({
-        url: `/users/${username}/repos`,
-        validateStatus: (response, result) => 
-          response.status === 200 && Array.isArray(result)
-      }),
-      transformErrorResponse: (response): ErrorResponse => 
-        response.status === 404 
-          ? { message: 'Пользователь не найден' }
-          : { message: 'Произошла ошибка при загрузке данных' }
+      query: (username) => `/users/${username}/repos`,
+      transformErrorResponse: (response): ErrorResponse => {
+        if (response.status === 404) {
+          return { message: 'Такого пользователя не существует' };
+        }
+        if (response.status === 403) {
+          return { message: 'Превышен лимит запросов к API GitHub. Пожалуйста, подождите немного.' };
+        }
+        return { message: 'Произошла ошибка при загрузке данных' };
+      }
     }),
   }),
 });
