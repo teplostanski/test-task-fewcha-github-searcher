@@ -1,8 +1,15 @@
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import { GithubRepos } from './components/GithubRepos';
+
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline text-red-500">Github Repos List</h1>
-    </div>
+    <Provider store={store}>
+      <div>
+        <h1>GitHub Repository Search</h1>
+        <GithubRepos />
+      </div>
+    </Provider>
   );
 }
 
