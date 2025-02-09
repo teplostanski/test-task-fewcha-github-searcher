@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { githubApi } from './github.api';
-import { searchSlice } from './search.slice';
+import { githubApi } from '../pages/home/api/userRepos';
+import { searchSlice } from '../pages/home/model/searchSlice';
 
 export const store = configureStore({
   reducer: {

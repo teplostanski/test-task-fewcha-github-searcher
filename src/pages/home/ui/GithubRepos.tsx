@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetUserReposQuery } from '../store/github.api';
+import { useGetUserReposQuery } from '../api/userRepos';
 import { Spinner } from '@heroui/react';
 import { SearchInput } from './SearchInput';
 import { RepoCard } from './RepoCard';
 import { ErrorMessage } from './ErrorMessage';
-import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
-import { REPOS_PER_PAGE } from '../constants/github';
-import { selectUsername, selectPage, incrementPage } from '../store/search.slice';
+import { useInfiniteScroll } from '../../../shared/pagination/useInfiniteScroll';
+import { REPOS_PER_PAGE } from '../../../shared/constants/github';
+import { selectUsername, selectPage, incrementPage } from '../model/searchSlice';
 
 export const GithubRepos = () => {
   const dispatch = useDispatch();

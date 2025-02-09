@@ -2,9 +2,9 @@ import { Input } from '@heroui/react';
 import { CiSearch as SearchIcon } from 'react-icons/ci';
 import { memo } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUsername } from '../store/search.slice';
+import { setUsername } from '../model/searchSlice';
 import debounce from 'debounce';
-import { DEBOUNCE_DELAY } from '../constants/github';
+import { DEBOUNCE_DELAY } from '../../../shared/constants/github';
 
 export const SearchInput = memo(() => {
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Repository } from '../types/github';
+import { Repository } from '../../../shared/types/github';
 
 interface ErrorResponse {
   message: string;

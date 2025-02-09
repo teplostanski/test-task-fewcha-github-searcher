@@ -1,6 +1,6 @@
 import { Link } from '@heroui/react';
 import { CiCalendar as CalendarIcon, CiStar as StarIcon } from 'react-icons/ci';
-import { Repository } from '../types/github';
+import { Repository } from '../../../shared/types/github';
 import { memo } from 'react';
 
 interface RepoCardProps {
