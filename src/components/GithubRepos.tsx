@@ -57,6 +57,50 @@ export const StarIcon = (props: SVGProps<SVGSVGElement>) => {
   );
 };
 
+export const CalendarIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      aria-hidden="true"
+      fill="none"
+      focusable="false"
+      height="1em"
+      role="presentation"
+      viewBox="0 0 24 24"
+      width="1em"
+      {...props}
+    >
+      <path
+        d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+      <path
+        d="M16 2V6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+      <path
+        d="M8 2V6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+      <path
+        d="M3 10H21"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+};
+
 export const GithubRepos = () => {
   const [username, setUsername] = useState('');
 
@@ -77,6 +121,14 @@ export const GithubRepos = () => {
   const getErrorMessage = (error: any) => {
     console.log('Error object:', error);
     return error.message || 'Произошла ошибка при загрузке данных';
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('ru-RU', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
   };
 
   const showReposList = !isFetching && !error && repos && repos.length > 0;
@@ -114,10 +166,16 @@ export const GithubRepos = () => {
                 {repo.name}
               </Link>
               {repo.description && <p>{repo.description}</p>}
-              <span className="flex items-center gap-2">
-                <StarIcon className="mb-0.5 text-default-200 pointer-events-none flex-shrink-0" />
-                <span className="text-sm">{repo.stargazers_count}</span>
-              </span>
+              <div className="flex items-center gap-4">
+                <span className="flex items-center gap-2">
+                  <StarIcon className="mb-0.5 text-default-200 pointer-events-none flex-shrink-0" />
+                  <span className="text-sm font-thin">{repo.stargazers_count}</span>
+                </span>
+                <span className="flex items-center gap-2">
+                  <CalendarIcon className="mb-0.5 text-default-200 pointer-events-none flex-shrink-0" />
+                  <span className="text-sm font-thin">{formatDate(repo.updated_at)}</span>
+                </span>
+              </div>
             </li>
           ))}
         </ul>

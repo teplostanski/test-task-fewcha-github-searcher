@@ -6,6 +6,7 @@ interface Repository {
   html_url: string;
   description: string | null;
   stargazers_count: number;
+  updated_at: string;
 }
 
 interface ErrorResponse {
