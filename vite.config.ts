@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            'swiper': ['swiper', 'swiper/react'],
+            'heroui': ['@heroui/react'],
           }
         }
       }
