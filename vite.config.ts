@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks: {
             'heroui': ['@heroui/react'],
+            'redux': ['@reduxjs/toolkit', 'react-redux']
           }
         }
       }
