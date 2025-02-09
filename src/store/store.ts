@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { githubApi } from './github.api';
+import { searchSlice } from './search.slice';
 
 export const store = configureStore({
   reducer: {
     [githubApi.reducerPath]: githubApi.reducer,
+    search: searchSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(githubApi.middleware),

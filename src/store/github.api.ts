@@ -1,31 +1,30 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-interface Repository {
-  id: number;
-  name: string;
-  html_url: string;
-  description: string | null;
-  stargazers_count: number;
-  updated_at: string;
-}
+import { Repository } from '../types/github';
 
 interface ErrorResponse {
   message: string;
+}
+
+const headers: Record<string, string> = {
+  'Accept': 'application/vnd.github.v3+json'
+};
+
+if (import.meta.env.VITE_GITHUB_TOKEN) {
+  headers['Authorization'] = `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`;
 }
 
 export const githubApi = createApi({
   reducerPath: 'github',
   baseQuery: fetchBaseQuery({ 
     baseUrl: 'https://api.github.com',
-    headers: {
-      'Accept': 'application/vnd.github.v3+json',
-      'Authorization': 'Bearer '
-    }
+    headers
   }),
   endpoints: (builder) => ({
     getUserRepos: builder.query<Repository[], { username: string; page: number }>({
       query: ({ username, page }) => `/users/${username}/repos?per_page=20&page=${page}`,
-      serializeQueryArgs: ({ queryArgs }) => queryArgs.username,
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return endpointName + queryArgs.username;
+      },
       merge: (currentCache, newItems, { arg: { page } }) => {
         if (page === 1) return newItems;
         return [...currentCache, ...newItems];
