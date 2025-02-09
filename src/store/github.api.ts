@@ -23,8 +23,16 @@ export const githubApi = createApi({
     }
   }),
   endpoints: (builder) => ({
-    getUserRepos: builder.query<Repository[], string>({
-      query: (username) => `/users/${username}/repos`,
+    getUserRepos: builder.query<Repository[], { username: string; page: number }>({
+      query: ({ username, page }) => `/users/${username}/repos?per_page=20&page=${page}`,
+      serializeQueryArgs: ({ queryArgs }) => queryArgs.username,
+      merge: (currentCache, newItems, { arg: { page } }) => {
+        if (page === 1) return newItems;
+        return [...currentCache, ...newItems];
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.page !== previousArg?.page;
+      },
       transformErrorResponse: (response): ErrorResponse => {
         if (response.status === 404) {
           return { message: 'Такого пользователя не существует' };
