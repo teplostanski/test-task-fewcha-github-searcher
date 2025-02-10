@@ -1,5 +1,5 @@
 {
-  "name": "test-task-fewcha-gh-repo-list",
+  "name": "test-task-fewcha-github-searcher",
   "private": true,
   "type": "module",
   "scripts": {
