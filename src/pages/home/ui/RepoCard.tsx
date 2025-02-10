@@ -1,19 +1,12 @@
 import { Link } from '@heroui/react';
 import { CiCalendar as CalendarIcon, CiStar as StarIcon } from 'react-icons/ci';
-import { Repository } from '../../../shared/types/github';
+import { Repository } from '@/shared/types/github';
 import { memo } from 'react';
+import { formatDate } from '@/shared/date/formatDate';
 
 interface RepoCardProps {
   repo: Repository;
 }
-
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('ru-RU', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
-};
 
 export const RepoCard = memo(({ repo }: RepoCardProps) => {
   return (
@@ -23,10 +16,10 @@ export const RepoCard = memo(({ repo }: RepoCardProps) => {
       </Link>
       {repo.description && <p>{repo.description}</p>}
       <span className="flex items-center gap-2 text-sm font-thin">
-        <StarIcon size={23} color="hsl(var(--heroui-default-100))" />
-        {repo.stargazers_count}
-        <CalendarIcon size={23} color="hsl(var(--heroui-default-100))" />
-        {formatDate(repo.updated_at)}
+        <StarIcon color="hsl(var(--heroui-default-100))" size={23} />
+        <span data-testid="stars-count">{repo.stargazers_count}</span>
+        <CalendarIcon color="hsl(var(--heroui-default-100))" size={23} />
+        <span data-testid="updated-date">{formatDate(repo.updated_at)}</span>
       </span>
     </li>
   );

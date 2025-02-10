@@ -18,6 +18,8 @@ const getErrorMessage = (error: FetchBaseQueryError | SerializedError): string =
 
 export const ErrorMessage = memo(({ error }: ErrorMessageProps) => {
   return (
-    <div className="text-red-500 mt-2.5">{getErrorMessage(error)}</div>
+    <div className="text-red-500 mt-2.5" data-testid="error-message">
+      {getErrorMessage(error)}
+    </div>
   );
 }); 
